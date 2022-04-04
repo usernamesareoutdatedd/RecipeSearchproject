@@ -2,6 +2,7 @@ package com.cst2335.recipesearchproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -59,6 +60,8 @@ MyOpenHelper myOpenHelper;
         LV.setAdapter(adapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
@@ -66,6 +69,10 @@ MyOpenHelper myOpenHelper;
 
             @Override
             public boolean onQueryTextChange(String s) {
+
+
+                ContentValues newRow = new ContentValues();
+
                 adapter.getFilter().filter(s);
              if( s.equals ("Apple Pie")){
                 tv.setText("APPLE PIE:");
@@ -111,6 +118,14 @@ MyOpenHelper myOpenHelper;
              }
                 return false;
             }
+
+
+
+
+
+
+
+
         });
 
 
