@@ -2,6 +2,7 @@ package com.cst2335.recipesearchproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +32,7 @@ ArrayAdapter adapter;
 SearchView sv;
 TextView tv;
 TextView tv2;
+MyOpenHelper myOpenHelper;
 
 
 
@@ -38,6 +40,9 @@ TextView tv2;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myOpenHelper = new MyOpenHelper(this);
+        SQLiteDatabase RecipeDataBase = myOpenHelper.getWritableDatabase();
 
         LV= (ListView)findViewById(R.id.ListView);
         sv = (SearchView)findViewById(R.id.search);
