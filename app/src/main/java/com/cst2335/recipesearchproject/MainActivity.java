@@ -2,6 +2,7 @@ package com.cst2335.recipesearchproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,12 +33,17 @@ SearchView sv;
 TextView tv;
 TextView tv2;
 
+    MyOpenHelper myOpenHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        myOpenHelper = new MyOpenHelper(this);
+        SQLiteDatabase RecipeDataBase = myOpenHelper.getWritableDatabase();
 
         LV= (ListView)findViewById(R.id.ListView);
         sv = (SearchView)findViewById(R.id.search);
@@ -65,44 +71,45 @@ TextView tv2;
              if( s.equals ("Apple Pie")){
                 tv.setText("APPLE PIE:");
                 tv2.setText("2 1/2 cups of flour" +
-                        "4 teaspoons  sugar" +
-                        "14 tablespoons of butter" +
-                        "1 large egg" +
-                        "3 pounds of apples" +
-                        "1/4 teaspoon of cinnamon" +
-                        "pinch of ground nutmeg");
+
+                        "\n4 teaspoons  sugar" +
+                        "\n14 tablespoons of butter" +
+                        "\n1 large egg" +
+                        "\n3 pounds of apples" +
+                        "\n1/4 teaspoon of cinnamon" +
+                        "\npinch of ground nutmeg");
                 }
              if( s.equals("Custard")){
                  tv.setText("CUSTARD:");
                  tv2.setText("4 cups of milk" +
-                         "1 tablespoon vanilla extract" +
-                         "1 teaspoon of butter" +
-                         "4 eggs" +
-                         "1/2 cup of sugar" +
-                         "3 tablespoons of cornstarch");
+                         "\n1 tablespoon vanilla extract" +
+                         "\n1 teaspoon of butter" +
+                         "\n4 eggs" +
+                         "\n1/2 cup of sugar" +
+                         "\n3 tablespoons of cornstarch");
              }
 
              if(s.equals("Cookies")){
                  tv.setText("COOKIES:");
                  tv2.setText("2 1/4 cups of flour" +
-                         "1 teaspoon baking soda" +
-                         "1/2 teaspoon salt" +
-                         "1 cup butter" +
-                         "3/4 cups brown sugar" +
-                         "1 egg" +
-                         "2 cups of chocolate chips");
+                         "\n1 teaspoon baking soda" +
+                         "\n1/2 teaspoon salt" +
+                         "\n1 cup butter" +
+                         "\n3/4 cups brown sugar" +
+                         "\n1 egg" +
+                         "\n2 cups of chocolate chips");
              }
 
              if(s.equals("Brownies")){
                  tv.setText("BROWNIES:");
                  tv2.setText("1/2 cup butter" +
-                         "1 cup white sugar" +
-                         "2 eggs" +
-                         "1 teaspoon vanilla extract" +
-                         "1/2 cup of flour" +
-                         "1/4 teaspoon of salt" +
-                         "1/3 cup cocoa powder" +
-                         "1/4 teaspoon baking powder");
+                         "\n1 cup white sugar" +
+                         "\n2 eggs" +
+                         "\n1 teaspoon vanilla extract" +
+                         "\n1/2 cup of flour" +
+                         "\n1/4 teaspoon of salt" +
+                         "\n1/3 cup cocoa powder" +
+                         "\n1/4 teaspoon baking powder");
              }
                 return false;
             }
