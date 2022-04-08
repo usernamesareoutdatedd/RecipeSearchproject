@@ -4,12 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/campb/Downloads/RecipeSearchproject/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/campb/Downloads/clonerepo/app/src/main/res/drawable/circle.xml" value="0.1" />
+        <entry key="..\:/Users/campb/Downloads/clonerepo/app/src/main/res/drawable/custom_progress_bg.xml" value="0.2785" />
+        <entry key="..\:/Users/campb/Downloads/clonerepo/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/campb/Downloads/clonerepo/app/src/main/res/layout/header.xml" value="0.14722222222222223" />
+        <entry key="..\:/Users/campb/Downloads/clonerepo/app/src/main/res/layout/progress_bar.xml" value="0.333786231884058" />
         <entry key="..\:/Users/femio/Documents/Mobile graphical interface lab/RecipeSearchproject/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/thebl/AndroidStudioProjects/RecipeSearchproject/app/src/main/res/layout/activity_main.xml" value="0.22010869565217392" />
-        <entry key="..\:/Users/thebl/AndroidStudioProjects/RecipeSearchproject/app/src/main/res/layout/header.xml" value="0.11574074074074074" />
-        <entry key="..\:/Users/thebl/AndroidStudioProjects/RecipeSearchproject/app/src/main/res/layout/progress_bar.xml" value="0.264" />
-        <entry key="..\:/Users/thebl/AndroidStudioProjects/RecipeSearchproject/app/src/main/res/menu/header.xml" value="0.11574074074074074" />
-        <entry key="..\:/Users/thebl/AndroidStudioProjects/RecipeSearchproject/app/src/main/res/menu/main_menu.xml" value="0.264" />
       </map>
     </option>
   </component>
