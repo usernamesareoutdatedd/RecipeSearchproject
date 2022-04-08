@@ -2,6 +2,7 @@ package com.cst2335.recipesearchproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,18 +14,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.content.SharedPreferences;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG ="MainActivity";
+ProgressBar progressBar;
+int counter = 0;
 
     ListView LV;
 ArrayAdapter adapter;
@@ -41,9 +48,9 @@ TextView tv2;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         myOpenHelper = new MyOpenHelper(this);
         SQLiteDatabase RecipeDataBase = myOpenHelper.getWritableDatabase();
+        prog();
 
         LV= (ListView)findViewById(R.id.ListView);
         sv = (SearchView)findViewById(R.id.search);
@@ -120,7 +127,25 @@ TextView tv2;
 
     }
 
+    public void prog(){
+        progressBar = (android.widget.ProgressBar)findViewById(R.id.progressBar);
+        final Timer t = new Timer();
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                counter++;
+                progressBar.setProgress(counter);
 
+                if(counter == 100){
+                    t.cancel();
+
+                    Toast.makeText(MainActivity.this, "Loaded!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+    t.schedule(tt, 0, 100);
+
+    }
 
 
 }
