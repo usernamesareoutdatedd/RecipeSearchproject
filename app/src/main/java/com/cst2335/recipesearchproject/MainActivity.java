@@ -1,7 +1,13 @@
 package com.cst2335.recipesearchproject;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +26,9 @@ import android.widget.SearchView;
 import android.content.SharedPreferences;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.w3c.dom.Text;
 
@@ -30,18 +40,35 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG ="MainActivity";
-ProgressBar progressBar;
-int counter = 0;
+//ProgressBar progressBar;
+//int counter = 0;
+
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+
 
     ListView LV;
-ArrayAdapter adapter;
+    ArrayAdapter adapter;
     ArrayList<String>recipes;
-SearchView sv;
-TextView tv;
-TextView tv2;
+
+
+    SearchView sv;
+    TextView tv;
+    TextView tv2;
 
     MyOpenHelper myOpenHelper;
 
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +77,55 @@ TextView tv2;
 
         myOpenHelper = new MyOpenHelper(this);
         SQLiteDatabase RecipeDataBase = myOpenHelper.getWritableDatabase();
-        prog();
+        //prog();
 
-        LV= (ListView)findViewById(R.id.ListView);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_Open, R.string.close_menu);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+
+
+
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                                                             @Override
+                                                             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                                                 switch(item.getItemId()){
+                                                                     case R.id.home:
+                                                                            Log.i("MENU_DRAWER_TAG", "Home item is clicked");
+                                                                            drawerLayout.closeDrawer(GravityCompat.START);
+                                                                            break;
+                                                                     case R.id.favourites:
+                                                                         Log.i("MENU_DRAWER_TAG", "Favourite item is clicked");
+                                                                         drawerLayout.closeDrawer(GravityCompat.START);
+                                                                         break;
+                                                                     case R.id.help:
+                                                                         Log.i("MENU_DRAWER_TAG", "Help item is clicked");
+                                                                         drawerLayout.closeDrawer(GravityCompat.START);
+                                                                         builder.setTitle("Looking for Help?")
+                                                                                 .setMessage("Click the search button to find a recipe!")
+                                                                                 .setCancelable(true)
+                                                                                 .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
+                                                                                     @Override
+                                                                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                                                                         dialogInterface.cancel();
+                                                                                     }
+                                                                                 })
+                                                                                 .show();
+
+                                                                         break;
+                                                                 }return true;
+                                                             }
+                                                         });
+
+
+
+                LV = (ListView) findViewById(R.id.ListView);
         sv = (SearchView)findViewById(R.id.search);
         tv = (TextView)findViewById(R.id.textView);
         tv2 = (TextView)findViewById(R.id.textView3);
@@ -127,7 +200,7 @@ TextView tv2;
 
     }
 
-    public void prog(){
+   /** public void prog(){
         progressBar = (android.widget.ProgressBar)findViewById(R.id.progressBar);
         final Timer t = new Timer();
         TimerTask tt = new TimerTask() {
@@ -146,6 +219,6 @@ TextView tv2;
     t.schedule(tt, 0, 100);
 
     }
-
+**/
 
 }

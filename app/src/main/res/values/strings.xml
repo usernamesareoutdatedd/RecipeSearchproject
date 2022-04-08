@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RecipeSearchproject</string>
-
+<string name="menu_Open">Open</string>
+    <string name="close_menu">close</string>
 
 
 
