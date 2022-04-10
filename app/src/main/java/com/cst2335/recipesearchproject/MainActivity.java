@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -43,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG ="MainActivity";
 
-/**
- * Everything is defined here before onCreate method to function.
- * */
+    /**
+     * Everything is defined here before onCreate method to function.
+     * */
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
     TextView tv7;
     TextView tv8;
     TextView tv9;
+    EditText typeRecipe;
+    Button  addRecipe;
 
     /**
      * Database is opened
@@ -98,17 +101,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        typeRecipe = findViewById(R.id.add_EditTxt);
+        addRecipe = findViewById(R.id.add_btn);
+
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        String searchHere = sharedPreferences.getString("search","");
+        typeRecipe.setText(searchHere);
+
+
 
         /**
          * Progress bar is defined
          * */
-       progressBar = findViewById(R.id.progressbar);
+        progressBar = findViewById(R.id.progressbar);
 
         /**
          * Database is opened
          * */
-        myOpenHelper = new MyOpenHelper(this);
-        SQLiteDatabase RecipeDataBase = myOpenHelper.getWritableDatabase();
+        myOpenHelper = new MyOpenHelper(getApplicationContext());
+
+
+
+        addRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String recipeTyped = typeRecipe.getText().toString();
+                //String SearchedRecipe = sv.getQuery().toString();
+                myOpenHelper.addRecipe(new Recipe(addRecipe.toString(),recipeTyped));
+
+
+
+
+            }
+        });
+
+
+
+
+
 
         /**
          * Toolbar/Navigation drawer opened
@@ -153,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            countDownTimer.start();
+                countDownTimer.start();
 
             }
         });
@@ -163,39 +196,39 @@ public class MainActivity extends AppCompatActivity {
          * If something is clicked in the navigation drawer
          * */
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                                                             @Override
-                                                             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                                                                 switch(item.getItemId()){
-                                                                     case R.id.home:
-                                                                            Log.i("MENU_DRAWER_TAG", "Home item is clicked");
-                                                                            drawerLayout.closeDrawer(GravityCompat.START);
-                                                                            break;
-                                                                     case R.id.favourites:
-                                                                         Log.i("MENU_DRAWER_TAG", "Favourite item is clicked");
-                                                                         drawerLayout.closeDrawer(GravityCompat.START);
-                                                                         break;
-                                                                     case R.id.help:
-                                                                         Log.i("MENU_DRAWER_TAG", "Help item is clicked");
-                                                                         drawerLayout.closeDrawer(GravityCompat.START);
-                                                                         builder.setTitle("Looking for Help?")
-                                                                                 .setMessage("Click the search button to find a recipe!")
-                                                                                 .setCancelable(true)
-                                                                                 .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
-                                                                                     @Override
-                                                                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                                                                         dialogInterface.cancel();
-                                                                                     }
-                                                                                 })
-                                                                                 .show();
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.home:
+                        Log.i("MENU_DRAWER_TAG", "Home item is clicked");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.favourites:
+                        Log.i("MENU_DRAWER_TAG", "Favourite item is clicked");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.help:
+                        Log.i("MENU_DRAWER_TAG", "Help item is clicked");
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        builder.setTitle("Looking for Help?")
+                                .setMessage("Click the search button to find a recipe!")
+                                .setCancelable(true)
+                                .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                })
+                                .show();
 
-                                                                         break;
-                                                                 }return true;
-                                                             }
-                                                         });
+                        break;
+                }return true;
+            }
+        });
 
 
 
-                LV = (ListView) findViewById(R.id.ListView);
+        LV = (ListView) findViewById(R.id.ListView);
         sv = (SearchView)findViewById(R.id.search);
         tv = (TextView)findViewById(R.id.textView);
         tv2 = (TextView)findViewById(R.id.textView3);
@@ -233,51 +266,51 @@ public class MainActivity extends AppCompatActivity {
 /**
  * If s equals one of the array items, the recepie is listed for each item in the searchView
  * */
-             if( s.equals ("Apple Pie")){
-                tv.setText("APPLE PIE:");
-                tv2.setText("2 1/2 cups of flour");
-                 tv3.setText("4 teaspoons  sugar");
-                 tv4.setText("14 tablespoons of butter");
-                 tv5.setText( "1 large egg");
-                 tv6.setText( "3 pounds of apples");
-                 tv6.setText( "1/4 teaspoon of cinnamon");
-                 tv7.setText("pinch of ground nutmeg");
+                if( s.equals ("Apple Pie")){
+                    tv.setText("APPLE PIE:");
+                    tv2.setText("2 1/2 cups of flour");
+                    tv3.setText("4 teaspoons  sugar");
+                    tv4.setText("14 tablespoons of butter");
+                    tv5.setText( "1 large egg");
+                    tv6.setText( "3 pounds of apples");
+                    tv6.setText( "1/4 teaspoon of cinnamon");
+                    tv7.setText("pinch of ground nutmeg");
 
                 }
-             if( s.equals("Custard")){
-                 tv.setText("CUSTARD:");
-                 tv2.setText("4 cups of milk");
-                 tv3.setText("1 tablespoon vanilla extract");
-                 tv4.setText("1 teaspoon of butter");
-                 tv5.setText("4 eggs");
-                 tv6.setText("1/2 cup of sugar");
-                 tv7.setText("3 tablespoons of cornstarch");
-             }
+                if( s.equals("Custard")){
+                    tv.setText("CUSTARD:");
+                    tv2.setText("4 cups of milk");
+                    tv3.setText("1 tablespoon vanilla extract");
+                    tv4.setText("1 teaspoon of butter");
+                    tv5.setText("4 eggs");
+                    tv6.setText("1/2 cup of sugar");
+                    tv7.setText("3 tablespoons of cornstarch");
+                }
 
-             if(s.equals("Cookies")){
-                 tv.setText("COOKIES:");
-                 tv2.setText("2 1/4 cups of flour");
-                 tv3.setText("1 teaspoon baking soda");
-                 tv4.setText("1/2 teaspoon salt");
-                 tv5.setText("1 cup butter");
-                 tv6.setText("3/4 cups brown sugar");
-                 tv7.setText("1 egg");
-                 tv8.setText("2 cups of chocolate chips");
+                if(s.equals("Cookies")){
+                    tv.setText("COOKIES:");
+                    tv2.setText("2 1/4 cups of flour");
+                    tv3.setText("1 teaspoon baking soda");
+                    tv4.setText("1/2 teaspoon salt");
+                    tv5.setText("1 cup butter");
+                    tv6.setText("3/4 cups brown sugar");
+                    tv7.setText("1 egg");
+                    tv8.setText("2 cups of chocolate chips");
 
-             }
+                }
 
-             if(s.equals("Brownies")){
-                 tv.setText("BROWNIES:");
-                 tv2.setText("1/2 cup butter");
-                 tv3.setText("1 cup white sugar");
-                 tv4.setText("2 eggs");
-                 tv5.setText("1 teaspoon vanilla extract");
-                 tv6.setText( "1/2 cup of flour");
-                 tv7.setText("1/4 teaspoon of salt");
-                 tv8.setText("1/3 cup cocoa powder");
-                 tv9.setText("1/4 teaspoon baking powder");
+                if(s.equals("Brownies")){
+                    tv.setText("BROWNIES:");
+                    tv2.setText("1/2 cup butter");
+                    tv3.setText("1 cup white sugar");
+                    tv4.setText("2 eggs");
+                    tv5.setText("1 teaspoon vanilla extract");
+                    tv6.setText( "1/2 cup of flour");
+                    tv7.setText("1/4 teaspoon of salt");
+                    tv8.setText("1/3 cup cocoa powder");
+                    tv9.setText("1/4 teaspoon baking powder");
 
-             }
+                }
                 return false;
             }
         });

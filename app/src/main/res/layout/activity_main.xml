@@ -28,6 +28,18 @@
 
         </SearchView>
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Recipe"
+            android:id="@+id/add_EditTxt"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Recipe"
+            android:id="@+id/add_btn"/>
+
 
         <TextView
             android:id="@+id/textView"
